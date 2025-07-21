@@ -105,6 +105,7 @@ export default function Index() {
           </View>
         )}
       />
+      <View style={{paddingBottom:25}}>
       <Animated.View style={[styles.inputContainer, { marginBottom: bottomOffset }]}>
         <TextInput
           placeholder="Type here..."
@@ -114,6 +115,7 @@ export default function Index() {
         />
         <SubmitButton action={action} />
       </Animated.View>
+      </View>
       <ProfileModal visible={modalVisible} onClose={() => setModalVisible(false)} />
       <NotificationModal visible={notificationModalVisible} onClose={() => setNotificationModalVisible(false)} />
     </SafeAreaView>
@@ -129,19 +131,23 @@ const styles = StyleSheet.create({
   inputContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    paddingHorizontal: 15,
-    paddingBottom: 31,
-    backgroundColor: '#F1F8E9'
+    paddingHorizontal: 1,
+    padding:5,
+    paddingLeft:15,
+    marginHorizontal:25,
+    backgroundColor: 'white',
+    borderRadius:50,
+    paddingBottom:5,
+
   },
   input: {
     flex: 1,
     borderWidth: 1,
-    borderColor: '#ccc',
+    borderColor: 'white',
     borderRadius: 10,
-    padding: 10,
-    backgroundColor: '#fff',
+    backgroundColor: 'white',
     height: 50,
-    color: '#2E3D20'
+    color: '#2E3D20',
   },
   body: {
     paddingHorizontal: 20,
