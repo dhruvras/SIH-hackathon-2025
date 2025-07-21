@@ -9,8 +9,10 @@ import {
   StyleSheet,
   Text,
   TextInput,
-  View
+  TouchableOpacity,
+  View,
 } from 'react-native';
+import Icon from 'react-native-vector-icons/Feather';
 
 export default function index() {
   const [data, setData] = useState([]);
@@ -46,25 +48,43 @@ export default function index() {
   const action = async () => {
     if (!input.trim()) return;
 
-    // Add user's message to the list
     setData(prev => [...prev, { type: 'user', text: input }]);
     const currentInput = input;
     setInput('');
 
     try {
       const response = await sendPrompt(currentInput);
-      // Add bot's reply to the list
       setData(prev => [...prev, { type: 'bot', text: response }]);
     } catch (err) {
       setData(prev => [...prev, { type: 'bot', text: 'Error: ' + err.message }]);
     }
   };
 
+  // 👇 Added placeholder functions
+  const onPressNotifications = () => {
+    console.log('Notifications button pressed');
+    // TODO: implement notifications screen navigation or functionality
+  };
+
+  const onPressProfile = () => {
+    console.log('Profile button pressed');
+    // TODO: implement profile screen navigation or functionality
+  };
+
   return (
     <SafeAreaView style={styles.mainframe}>
       <View style={styles.header}>
-        <Text style={styles.title}>Ramu Bhai</Text>
+        <View style={{ flex: 1 }} />
+        <View style={styles.iconContainer}>
+          <TouchableOpacity style={styles.iconButton} onPress={onPressNotifications}>
+            <Icon name="bell" size={24} color="black" />
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.iconButton} onPress={onPressProfile}>
+            <Icon name="user" size={24} color="black" />
+          </TouchableOpacity>
+        </View>
       </View>
+
       <FlatList
         data={data}
         keyExtractor={(item, index) => index.toString()}
@@ -95,15 +115,8 @@ export default function index() {
 const styles = StyleSheet.create({
   mainframe: {
     flex: 1,
-    backgroundColor: '#fcdc7eff',
+    backgroundColor: '#FIF8E9',
     paddingBottom: 20
-  },
-  title: {
-    fontWeight: 'bold',
-    fontSize: 30,
-    marginVertical: 20,
-    alignSelf: 'center',
-    color:'white',
   },
   inputContainer: {
     flexDirection: 'row',
@@ -111,7 +124,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 15,
     paddingBottom: 31,
     gap: 10,
-    backgroundColor: '#fcdc7eff'
+    backgroundColor: '#FIF8E9'
   },
   input: {
     flex: 1,
@@ -131,9 +144,18 @@ const styles = StyleSheet.create({
     fontSize: 16,
     flexShrink: 1
   },
-  header:{
-    paddingTop:10,
-    backgroundColor:'#694b41ff',
-    borderRadius:10,
+  header: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    backgroundColor: '#FFC107',
+    padding: 15,
+  },
+  iconContainer: {
+    flexDirection: 'row',
+    gap: 15
+  },
+  iconButton: {
+    marginLeft: 10
   }
 });
