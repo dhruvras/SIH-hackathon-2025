@@ -1,9 +1,12 @@
+import NotificationModal from '@/components/NotificationsModal';
+import ProfileModal from '@/components/ProfilePopup';
 import SubmitButton from '@/components/SubmitButton';
 import { sendPrompt } from '@/utils/ai';
 import React, { useEffect, useState } from 'react';
 import {
   Animated,
   FlatList,
+  Image,
   Keyboard,
   SafeAreaView,
   StyleSheet,
@@ -13,12 +16,15 @@ import {
   View,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Feather';
+import logo from '../../assets/images/logo.png'; // Adjust the path accordingly
 
-export default function index() {
+export default function Index() {
   const [data, setData] = useState([]);
   const [keyboardVisible, setKeyboardVisible] = useState(false);
   const [bottomOffset] = useState(new Animated.Value(0));
   const [input, setInput] = useState('');
+  const [modalVisible, setModalVisible] = useState(false);
+  const [notificationModalVisible, setNotificationModalVisible] = useState(false);
 
   useEffect(() => {
     const showSub = Keyboard.addListener('keyboardDidShow', (e) => {
@@ -60,31 +66,32 @@ export default function index() {
     }
   };
 
-  // 👇 Added placeholder functions
   const onPressNotifications = () => {
     console.log('Notifications button pressed');
-    // TODO: implement notifications screen navigation or functionality
+    setNotificationModalVisible(true);
   };
 
   const onPressProfile = () => {
     console.log('Profile button pressed');
-    // TODO: implement profile screen navigation or functionality
+    setModalVisible(true);
   };
 
   return (
     <SafeAreaView style={styles.mainframe}>
-      <View style={styles.header}>
-        <View style={{ flex: 1 }} />
-        <View style={styles.iconContainer}>
-          <TouchableOpacity style={styles.iconButton} onPress={onPressNotifications}>
-            <Icon name="bell" size={24} color="black" />
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.iconButton} onPress={onPressProfile}>
-            <Icon name="user" size={24} color="black" />
-          </TouchableOpacity>
+      <View style={{ alignItems: 'center' }}>
+        <View style={styles.header}>
+          <View style={{ flex: 1 }} />
+          <View style={styles.iconContainer}>
+            <TouchableOpacity style={styles.iconButton} onPress={onPressNotifications}>
+              <Icon name="bell" size={24} color="black" />
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.iconButton} onPress={onPressProfile}>
+              <Icon name="user" size={24} color="black" />
+            </TouchableOpacity>
+          </View>
         </View>
+        <Image source={logo} style={styles.image} />
       </View>
-
       <FlatList
         data={data}
         keyExtractor={(item, index) => index.toString()}
@@ -98,7 +105,6 @@ export default function index() {
           </View>
         )}
       />
-
       <Animated.View style={[styles.inputContainer, { marginBottom: bottomOffset }]}>
         <TextInput
           placeholder="Type here..."
@@ -108,6 +114,8 @@ export default function index() {
         />
         <SubmitButton action={action} />
       </Animated.View>
+      <ProfileModal visible={modalVisible} onClose={() => setModalVisible(false)} />
+      <NotificationModal visible={notificationModalVisible} onClose={() => setNotificationModalVisible(false)} />
     </SafeAreaView>
   );
 }
@@ -115,7 +123,7 @@ export default function index() {
 const styles = StyleSheet.create({
   mainframe: {
     flex: 1,
-    backgroundColor: '#FIF8E9',
+    backgroundColor: '#F1F8E9', // Corrected color
     paddingBottom: 20
   },
   inputContainer: {
@@ -123,8 +131,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingHorizontal: 15,
     paddingBottom: 31,
-    gap: 10,
-    backgroundColor: '#FIF8E9'
+    backgroundColor: '#F1F8E9'
   },
   input: {
     flex: 1,
@@ -140,6 +147,11 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     paddingBottom: 10
   },
+  image: {
+  width: '80%',         // increase width
+  height: 90,
+},
+
   bot: {
     fontSize: 16,
     flexShrink: 1
@@ -150,10 +162,11 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     backgroundColor: '#FFC107',
     padding: 15,
+    paddingTop: 30,
   },
   iconContainer: {
     flexDirection: 'row',
-    gap: 15
+    marginLeft: 10 // Use margin instead of gap
   },
   iconButton: {
     marginLeft: 10
