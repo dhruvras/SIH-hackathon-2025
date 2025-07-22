@@ -7,6 +7,10 @@ import Icon from 'react-native-vector-icons/Feather';
 import foot from '../assets/images/footimage.png'; // Adjust the path accordingly
 import logo from '../assets/images/logo.png'; // Adjust the path accordingly
 import AdSlider from '../components/AdSlider'; // Adjust path if needed
+// import NewCard from '../components/NewCard'; // Adjust path if needed
+import NewCard from '../components/NewCard';
+import newsletterData from '../constants/data';
+
 export default function index() {
   const router = useRouter();
   const [modalVisible, setModalVisible] = useState(false);
@@ -26,6 +30,7 @@ export default function index() {
     console.log('Profile button pressed');
     setModalVisible(true);
   };
+  const hasData = Array.isArray(newsletterData) && newsletterData.length > 0;
 
   return (
     <ImageBackground
@@ -70,6 +75,16 @@ export default function index() {
           </View>
           <Text style={styles.textframe1}>Something New !</Text>
           <AdSlider />
+          <Text style={{ fontSize: 24, fontWeight: 'bold', textAlign: 'center', marginBottom: 20 }}>
+        Latest News !
+      </Text>
+        {hasData ? (
+          newsletterData.map((item) => (
+            <NewCard key={item.id} item={item} />
+          ))
+        ) : (
+          <Text style={{ textAlign: 'center' }}>No data available</Text>
+        )}
 
        
 
