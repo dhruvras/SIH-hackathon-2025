@@ -7,14 +7,15 @@ import Icon from 'react-native-vector-icons/Feather';
 import foot from '../assets/images/footimage.png'; // Adjust the path accordingly
 import logo from '../assets/images/logo.png'; // Adjust the path accordingly
 import AdSlider from '../components/AdSlider'; // Adjust path if needed
-
 export default function index() {
   const router = useRouter();
   const [modalVisible, setModalVisible] = useState(false);
   const [notificationModalVisible, setNotificationModalVisible] = useState(false);
-  
-  const action = () => {
+  const chatnav = () => {
     router.navigate("/(chatbot)");
+  };
+  const marketnav = () => {
+    router.navigate("/(market)");
   };
   const onPressNotifications = () => {
     console.log('Notifications button pressed');
@@ -49,7 +50,7 @@ export default function index() {
           <Image source={logo} style={styles.image} />
           {/* <Button onPress={action} title="click"></Button> */}
           <View style={styles.navmenu}>
-            <TouchableOpacity>
+            <TouchableOpacity onPress={marketnav}>
               <View style={styles.marketbutton}>
                 <View>
                   <Text style={styles.textframe}>Acess Our</Text>
@@ -57,7 +58,7 @@ export default function index() {
                 </View>
               </View>
             </TouchableOpacity>
-            <TouchableOpacity>
+            <TouchableOpacity onPress={chatnav}>
               <View style={styles.chatbutton}>
                 {/* icons */}
                 <View>
