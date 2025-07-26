@@ -21,7 +21,13 @@ const newsletterData = [
     id: '4',
     image: require('../assets/images/14.png'),
     title: '',
-    content: `West Bengal government plans to increase maize cultivation to meet animal feed demand. The expansion will cover 60,000 hectares in three years. Focus is on collaboration and women's empowerment in agriculture. West Bengal aims to boost exports with cold chain investments.`,
+    content: `The West Bengal government has unveiled an ambitious plan to significantly increase maize cultivation across the state in an effort to meet the growing demand for animal feed. This initiative is expected to bring about a major shift in the agricultural landscape, with the government aiming to expand maize farming to over 60,000 hectares of land over the next three years.
+
+The plan emphasizes strong collaboration between agricultural departments, local farming communities, and private stakeholders to ensure efficient implementation. A major focus of the initiative is on empowering women in agriculture, with targeted training programs, subsidies, and access to modern farming techniques designed specifically for women-led farming units.
+
+Furthermore, to support the storage and transportation of perishable produce, the government is making strategic investments in cold chain infrastructure, enabling better post-harvest management and reducing spoilage. These developments are part of West Bengal’s broader strategy to strengthen its agro-based economy and boost agricultural exports to both domestic and international markets.
+
+With favorable soil conditions, technological interventions, and farmer-centric policies, the state is positioning itself as a leading hub for sustainable maize production in eastern India.`,
   },
   
   {

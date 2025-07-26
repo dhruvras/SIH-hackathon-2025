@@ -88,10 +88,10 @@ export default function index() {
 
        
 
+        <Image source={foot} style={styles.footimage}/>
         </ScrollView>
         <ProfileModal visible={modalVisible} onClose={() => setModalVisible(false)} />
         <NotificationModal visible={notificationModalVisible} onClose={() => setNotificationModalVisible(false)} />
-        <Image source={foot} style={styles.footimage}/>
       </SafeAreaView>
     </ImageBackground>
   );
@@ -113,7 +113,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    backgroundColor: '#FFC107',
+    // backgroundColor: '#FFC107',
     padding: 15,
     paddingTop: 30,
   },
