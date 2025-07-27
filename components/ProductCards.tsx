@@ -1,10 +1,10 @@
 // components/ProductCards.tsx
 import React from 'react';
 import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-
-export default function ProductCard({ item }) {
+export default function ProductCard({ item, action}) {
   return (
-    <TouchableOpacity>
+    <View>
+    <TouchableOpacity onPress={action}>
       <View style={styles.box}>
         <Image source={item.image} style={styles.image} />
         <View style={styles.textBox}>
@@ -14,6 +14,9 @@ export default function ProductCard({ item }) {
         </View>
       </View>
     </TouchableOpacity>
+    {/* <ProductPage data = {item}/> */}
+    </View>
+
   );
 }
 

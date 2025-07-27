@@ -1,13 +1,13 @@
 import CategorySlider from '@/components/CategorySlider';
 import NotificationModal from '@/components/NotificationsModal';
 import ProfileModal from '@/components/ProfilePopup';
-import SideSlider from '@/components/SideSlider'; // Make sure it's imported
+import SideSlider from '@/components/SideSlider';
+import { useRouter } from 'expo-router';
 import React, { useState } from 'react';
 import {
   FlatList,
   ImageBackground,
   SafeAreaView,
-  ScrollView,
   StyleSheet,
   Text,
   TextInput,
@@ -15,8 +15,8 @@ import {
   View,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Feather';
-import AdSlider from "../../components/AdSlider";
-import ProductCard from '../../components/ProductCards'; // path may vary
+import AdSlider from '../../components/AdSlider';
+import ProductCard from '../../components/ProductCards'; // verify file name and path
 import inventoryData from '../../constants/inventory';
 
 export default function DetailedPage() {
@@ -24,6 +24,7 @@ export default function DetailedPage() {
   const [notificationModalVisible, setNotificationModalVisible] = useState(false);
   const [sideMenuVisible, setSideMenuVisible] = useState(false);
   const [searchText, setSearchText] = useState('');
+  const router = useRouter();
 
   const onPressNotifications = () => {
     setNotificationModalVisible(true);
@@ -61,35 +62,42 @@ export default function DetailedPage() {
             </TouchableOpacity>
           </View>
         </View>
-        <ScrollView style={styles.content}>
-          {/* Search Box */}
-          <View style={styles.searchContainer}>
-            <TextInput
-              placeholder="Search products..."
-              placeholderTextColor="#777"
-              value={searchText}
-              onChangeText={setSearchText}
-              style={styles.searchInput}
-            />
-            <Icon name="search" size={20} color="#333" style={styles.searchIcon} />
-          </View>
-          <AdSlider />
-          <CategorySlider onSelectCategory={(category) => console.log('Selected:', category)} />
-          <View style={styles.grid}>
-            <FlatList
-              data={inventoryData}
-              renderItem={({ item }) => <ProductCard item={item} />}
-              keyExtractor={item => item.id}
-              numColumns={2}
-              contentContainerStyle={{ padding: 2 }}
-              columnWrapperStyle={{ justifyContent: 'space-between' }}
-              showsVerticalScrollIndicator={false}
-            />
-            
 
+        {/* Content with FlatList to avoid nested scroll issues */}
+        <FlatList
+          data={inventoryData.filter(item =>
+            item.title.toLowerCase().includes(searchText.toLowerCase())
+          )}
+          keyExtractor={(item) => String(item.id)}
+          numColumns={2}
+          showsVerticalScrollIndicator={false}
+          contentContainerStyle={{ paddingHorizontal: 16, paddingTop: 10, paddingBottom: 30 }}
+          columnWrapperStyle={{ justifyContent: 'space-between' }}
+          ListHeaderComponent={
+            <>
+              {/* Search Box */}
+              <View style={styles.searchContainer}>
+                <TextInput
+                  placeholder="Search products..."
+                  placeholderTextColor="#777"
+                  value={searchText}
+                  onChangeText={setSearchText}
+                  style={styles.searchInput}
+                />
+                <Icon name="search" size={20} color="#333" style={styles.searchIcon} />
+              </View>
 
-          </View>
-        </ScrollView>
+              <AdSlider />
+              <CategorySlider onSelectCategory={(category) => console.log('Selected:', category)} />
+            </>
+          }
+          renderItem={({ item }) => (
+            <ProductCard
+              item={item}
+              action={() => router.push({ pathname: '/(market)/produtpage', params: { id: item.id } })}
+            />
+          )}
+        />
 
         {/* Modals */}
         <ProfileModal visible={modalVisible} onClose={() => setModalVisible(false)} />
@@ -135,7 +143,7 @@ const styles = StyleSheet.create({
   searchContainer: {
     flexDirection: 'row',
     backgroundColor: '#fff',
-    marginHorizontal: 20,
+    marginHorizontal: 4,
     borderRadius: 12,
     alignItems: 'center',
     paddingHorizontal: 15,
@@ -145,6 +153,7 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.1,
     shadowRadius: 4,
+    marginBottom: 10,
   },
   searchInput: {
     flex: 1,
@@ -153,16 +162,5 @@ const styles = StyleSheet.create({
   },
   searchIcon: {
     marginLeft: 10,
-  },
-  content: {
-    flex: 1,
-    marginTop: 10,
-    paddingHorizontal: 16,
-  },
-  grid: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    justifyContent: 'space-between',
-    padding: 0,
   },
 });
