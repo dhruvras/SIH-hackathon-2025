@@ -1,20 +1,24 @@
+import LanguageSwitcher from '@/components/LanguageSwitcher';
 import NotificationModal from '@/components/NotificationsModal';
 import ProfileModal from '@/components/ProfilePopup';
+import '@/i18n'; // must come before any component
+import i18n from '@/i18n';
 import { useRouter } from 'expo-router';
 import React, { useState } from 'react';
+import { I18nextProvider, useTranslation } from 'react-i18next';
 import { Image, ImageBackground, SafeAreaView, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import Icon from 'react-native-vector-icons/Feather';
-import foot from '../assets/images/footimage.png'; // Adjust the path accordingly
-import logo from '../assets/images/logo.png'; // Adjust the path accordingly
-import AdSlider from '../components/AdSlider'; // Adjust path if needed
-// import NewCard from '../components/NewCard'; // Adjust path if needed
+import foot from '../assets/images/footimage.png';
+import logo from '../assets/images/logo.png';
+import AdSlider from '../components/AdSlider';
 import NewCard from '../components/NewCard';
 import newsletterData from '../constants/data';
-
-export default function index() {
+export default function Index() {
+  const { t } = useTranslation(); // ← translation hook
   const router = useRouter();
   const [modalVisible, setModalVisible] = useState(false);
   const [notificationModalVisible, setNotificationModalVisible] = useState(false);
+
   const chatnav = () => {
     router.navigate("/(chatbot)");
   };
@@ -33,14 +37,15 @@ export default function index() {
   const hasData = Array.isArray(newsletterData) && newsletterData.length > 0;
 
   return (
+    <I18nextProvider i18n={i18n}>
     <ImageBackground
-      source={require('../assets/images/bg.png')}  // adjust the path if needed
+      source={require('../assets/images/bg.png')}
       style={styles.background}
-      resizeMode="cover" // or "contain"
+      resizeMode="cover"
     >
       <SafeAreaView style={styles.overlay}>
-        {/* You can place buttons/text/etc. here */}
         <View style={styles.header}>
+          <LanguageSwitcher />
           <View style={{ flex: 1 }} />
           <View style={styles.iconContainer}>
             <TouchableOpacity style={styles.iconButton} onPress={onPressNotifications}>
@@ -51,51 +56,50 @@ export default function index() {
             </TouchableOpacity>
           </View>
         </View>
+
         <ScrollView style={styles.contentframe} contentContainerStyle={{ alignItems: 'center' }}>
           <Image source={logo} style={styles.image} />
-          {/* <Button onPress={action} title="click"></Button> */}
+
           <View style={styles.navmenu}>
             <TouchableOpacity onPress={marketnav}>
               <View style={styles.marketbutton}>
-                <View>
-                  <Text style={styles.textframe}>Acess Our</Text>
-                  <Text style={styles.textframe}>Marketplace</Text>
-                </View>
+                <Text style={styles.textframe}>{t('access_marketplace')}</Text>
               </View>
             </TouchableOpacity>
+
             <TouchableOpacity onPress={chatnav}>
               <View style={styles.chatbutton}>
-                {/* icons */}
-                <View>
-                  <Text style={styles.textframe}>Acess Our</Text>
-                  <Text style={styles.textframe}>ChatBot</Text>
-                </View>
+                <Text style={styles.textframe}>{t('access_chatbot')}</Text>
               </View>
             </TouchableOpacity>
           </View>
-          <Text style={styles.textframe1}>Something New !</Text>
+
+          <Text style={styles.textframe1}>{t('something_new')}</Text>
           <AdSlider />
+
           <Text style={{ fontSize: 24, fontWeight: 'bold', textAlign: 'center', marginBottom: 20 }}>
-        Latest News !
-      </Text>
-        {hasData ? (
-          newsletterData.map((item) => (
-            <NewCard key={item.id} item={item} />
-          ))
-        ) : (
-          <Text style={{ textAlign: 'center' }}>No data available</Text>
-        )}
+            {t('latest_news')}
+          </Text>
 
-       
+          {hasData ? (
+            newsletterData.map((item) => (
+              <NewCard key={item.id} item={item} />
+            ))
+          ) : (
+            <Text style={{ textAlign: 'center' }}>{t('no_data')}</Text>
+          )}
 
-        <Image source={foot} style={styles.footimage}/>
+          <Image source={foot} style={styles.footimage} />
         </ScrollView>
+
         <ProfileModal visible={modalVisible} onClose={() => setModalVisible(false)} />
         <NotificationModal visible={notificationModalVisible} onClose={() => setNotificationModalVisible(false)} />
       </SafeAreaView>
     </ImageBackground>
+    </I18nextProvider>
   );
 }
+
 
 const styles = StyleSheet.create({
   background: {

@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next'; // <-- import i18n
 import {
   Dimensions,
   Image,
@@ -14,6 +15,11 @@ const { width: screenWidth, height: screenHeight } = Dimensions.get('window');
 
 export default function NewCard({ item }) {
   const [modalVisible, setModalVisible] = useState(false);
+  const { t } = useTranslation(); // <-- use the hook
+
+  // Dynamically fetch translations based on item.id
+  const title = t(`newsletters.${item.id - 1}.title`) || 'No Title';
+  const content = t(`newsletters.${item.id - 1}.content`) || '';
 
   return (
     <>
@@ -24,10 +30,10 @@ export default function NewCard({ item }) {
             <Image source={item.image} style={styles.image} />
             <View style={styles.textWrapper}>
               <Text numberOfLines={2} style={styles.title}>
-                {item.title || 'No Title'}
+                {title}
               </Text>
               <Text numberOfLines={5} ellipsizeMode="tail" style={styles.text}>
-                {item.content}
+                {content}
               </Text>
             </View>
           </View>
@@ -45,11 +51,11 @@ export default function NewCard({ item }) {
           <View style={styles.modalContainer}>
             <ScrollView contentContainerStyle={styles.modalContent}>
               <Image source={item.image} style={styles.modalImage} />
-              <Text style={styles.modalTitle}>{item.title || 'No Title'}</Text>
-              <Text style={styles.modalText}>{item.content}</Text>
+              <Text style={styles.modalTitle}>{title}</Text>
+              <Text style={styles.modalText}>{content}</Text>
             </ScrollView>
             <TouchableOpacity onPress={() => setModalVisible(false)} style={styles.closeButton}>
-              <Text style={{ color: '#fff', fontWeight: 'bold' }}>Close</Text>
+              <Text style={{ color: '#fff', fontWeight: 'bold' }}>{t('close')}</Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -98,8 +104,6 @@ const styles = StyleSheet.create({
     color: '#333',
     textAlign: 'justify',
   },
-
-  // Modal styles
   backdrop: {
     flex: 1,
     backgroundColor: 'rgba(0,0,0,0.4)',

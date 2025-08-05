@@ -1,0 +1,35 @@
+
+{
+  "newsletters": [
+    {
+      "title": "Maize Expansion in West Bengal",
+      "content": "West Bengal government plans to increase maize cultivation to meet animal feed demand. The expansion will cover 60,000 hectares in three years. Focus is on collaboration and women's empowerment in agriculture. West Bengal aims to boost exports with cold chain investments."
+    },
+    {
+      "title": "cotton farming based",
+      "content": "India's naturally colored cotton, once commercially successful, struggles to regain traction despite rising demand for sustainable textiles. Low yields hinder farmer adoption, despite premium pricing and environmental benefits. Government support, improved seed systems, and market linkages."
+    },
+    {
+      "title": "Govt bans 18 antibiotics, 18 antivirals",
+      "content": "The government has banned the use of 18 antibiotics, 18 antivirals, and one anti-protozoan in egg-laying birds, milch animals, bees, and livestock. This prohibition extends to farms where intestines are sourced and at any stage of animal casing production."
+    },
+    {
+      "title": "West Bengal’s Ambitious Maize Initiative",
+      "content": "The West Bengal government has unveiled an ambitious plan to significantly increase maize cultivation across the state in an effort to meet the growing demand for animal feed. This initiative is expected to bring about a major shift in the agricultural landscape, with the government aiming to expand maize farming to over 60,000 hectares of land over the next three years.\n\nThe plan emphasizes strong collaboration between agricultural departments, local farming communities, and private stakeholders to ensure efficient implementation. A major focus of the initiative is on empowering women in agriculture, with targeted training programs, subsidies, and access to modern farming techniques designed specifically for women-led farming units.\n\nFurthermore, to support the storage and transportation of perishable produce, the government is making strategic investments in cold chain infrastructure, enabling better post-harvest management and reducing spoilage. These developments are part of West Bengal’s broader strategy to strengthen its agro-based economy and boost agricultural exports to both domestic and international markets.\n\nWith favorable soil conditions, technological interventions, and farmer-centric policies, the state is positioning itself as a leading hub for sustainable maize production in eastern India."
+    },
+    {
+      "title": "Jharkhand’s Pearl Farming Hub",
+      "content": "Jharkhand is quickly becoming India's freshwater pearl farming center through government-backed training and infrastructure projects. Hazaribagh is set to be the first pearl farming cluster with significant investment."
+    },
+    {
+      "title": "Kharif Season Sees 58% Paddy Surge",
+      "content": "Paddy sowing during this Kharif season has surged by 58 per cent, reaching 13.22 lakh hectares, according to government data released on June 20, 2025. Pulses, Shri Anna cum Coarse cereals, and cotton have also witnessed increased acreage, while oilseeds experienced a slight decrease."
+    }
+  ],
+  
+    "access_marketplace": "Access Our\nMarketplace",
+    "access_chatbot": "Access Our\nChatBot",
+    "something_new": "Something New !",
+    "latest_news": "Latest News !",
+    "no_data": "No data available"
+}

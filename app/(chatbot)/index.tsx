@@ -1,6 +1,9 @@
+import LanguageSwitcher from '@/components/LanguageSwitcher';
 import NotificationModal from '@/components/NotificationsModal';
 import ProfileModal from '@/components/ProfilePopup';
 import SubmitButton from '@/components/SubmitButton';
+
+import i18n from '@/i18n';
 import { sendPrompt } from '@/utils/ai';
 import React, { useEffect, useState } from 'react';
 import {
@@ -55,7 +58,7 @@ export default function Index() {
     if (!input.trim()) return;
 
     setData(prev => [...prev, { type: 'user', text: input }]);
-    const currentInput = input;
+    const currentInput = input+` and pls give the response in ${(i18n.language=='hi')? "hindi" : "english"} language for me`;
     setInput('');
 
     try {
@@ -80,6 +83,7 @@ export default function Index() {
     <SafeAreaView style={styles.mainframe}>
       <View style={{ alignItems: 'center' }}>
         <View style={styles.header}>
+          <LanguageSwitcher />
           <View style={{ flex: 1 }} />
           <View style={styles.iconContainer}>
             <TouchableOpacity style={styles.iconButton} onPress={onPressNotifications}>
