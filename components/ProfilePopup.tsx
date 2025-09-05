@@ -3,7 +3,7 @@
 import { Ionicons } from '@expo/vector-icons';
 import { BlurView } from 'expo-blur';
 import React from 'react';
-import { Modal, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { Image, Modal, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
 type Props = {
   visible: boolean;
@@ -27,13 +27,14 @@ export default function ProfileModal({ visible, onClose }: Props) {
 
           {/* Profile Content */}
           <Text style={styles.title}>Profile</Text>
-          <Text style={styles.label}>Name: John Doe</Text>
+          <Image source={require("@/assets/images/akashdhiyaani.png")} style={{borderRadius:200, width:100, height:100,marginVertical:10, marginLeft:95}}/>
+          <Text style={styles.label}>Name: Akash Dhyani</Text>
+          <Text style={styles.label}>Location: New Tehri</Text>
+          <Text style={styles.label}>Farm ID: 78957436</Text>
+          <Text style={styles.label}>Phone No.: 3342359299</Text>
+          {/* <Text style={styles.label}>Email: john@example.com</Text>
           <Text style={styles.label}>Email: john@example.com</Text>
-          <Text style={styles.label}>Email: john@example.com</Text>
-          <Text style={styles.label}>Email: john@example.com</Text>
-          <Text style={styles.label}>Email: john@example.com</Text>
-          <Text style={styles.label}>Email: john@example.com</Text>
-          <Text style={styles.label}>Email: john@example.com</Text>
+          <Text style={styles.label}>Email: john@example.com</Text> */}
           {/* Add more profile fields here */}
         </View>
       </BlurView>

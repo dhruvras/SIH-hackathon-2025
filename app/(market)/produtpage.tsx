@@ -1,13 +1,32 @@
 import { useLocalSearchParams } from 'expo-router';
-import { Image, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { Alert, Image, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import inventoryData from '../../constants/inventory';
+// import { sendPrompt } from '@/utils/ai';
+const sendPrompt = ({s})=>{
+  console.log(s)
+}
 
 export default function ProductPage() {
   const { id } = useLocalSearchParams();
-  const orderplaced = ()=>{
-    // order placed, send email, show an alert of order placed,
-  }
   const product = inventoryData.find((item) => String(item.id) === String(id));
+
+  const orderplaced = async () => {
+    try {
+      // generate email content with AI
+      const prompt =  sendPrompt(
+        `Write a professional email to the seller saying a customer is interested in buying the product: ${product?.title}`
+      );
+
+      // send the email
+      // await sendEmail();
+
+      // show confirmation to user
+      Alert.alert("Order placed", "An email has been sent to the seller!");
+    } catch (err) {
+      console.error(err);
+      Alert.alert("Error", "Failed to place the order.");
+    }
+  };
 
   if (!product)
     return (
@@ -19,7 +38,6 @@ export default function ProductPage() {
   return (
     <ScrollView style={styles.container}>
       {product.image ? (
-        // If product.image is a local require/import
         <Image source={product.image} style={styles.image} resizeMode="contain" />
       ) : (
         <View style={styles.noImage}>
@@ -30,8 +48,6 @@ export default function ProductPage() {
       <Text style={styles.title}>{product.title}</Text>
       <Text style={styles.price}>{product.price}</Text>
       <Text style={styles.location}>Available at: {product.location}</Text>
-
-      {/* Added Product Description */}
       <Text style={styles.description}>{product.description || 'No description available.'}</Text>
 
       <View style={styles.buttonRow}>
@@ -39,13 +55,14 @@ export default function ProductPage() {
           <Text style={styles.buttonText}>Buy Now</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity style={[styles.button, styles.addToCart]} onPress={() => alert('Add to Cart pressed')}>
+        <TouchableOpacity style={[styles.button, styles.addToCart]} onPress={() => Alert.alert('Added to cart')}>
           <Text style={styles.buttonText}>Add to Cart</Text>
         </TouchableOpacity>
       </View>
     </ScrollView>
   );
 }
+
 
 const styles = StyleSheet.create({
   container: {
