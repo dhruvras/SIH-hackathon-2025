@@ -32,10 +32,7 @@ export default function ProfileModal({ visible, onClose }: Props) {
           <Text style={styles.label}>Location: New Tehri</Text>
           <Text style={styles.label}>Farm ID: 78957436</Text>
           <Text style={styles.label}>Phone No.: 3342359299</Text>
-          {/* <Text style={styles.label}>Email: john@example.com</Text>
-          <Text style={styles.label}>Email: john@example.com</Text>
-          <Text style={styles.label}>Email: john@example.com</Text> */}
-          {/* Add more profile fields here */}
+          
         </View>
       </BlurView>
     </Modal>
