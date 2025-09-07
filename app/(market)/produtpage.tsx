@@ -1,10 +1,11 @@
+import { sendPrompt } from '@/utils/ai';
 import { useLocalSearchParams } from 'expo-router';
 import { Alert, Image, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import inventoryData from '../../constants/inventory';
-// import { sendPrompt } from '@/utils/ai';
-const sendPrompt = ({s})=>{
-  console.log(s)
-}
+import { sendEmail } from "../../utils/sendEmail";
+
+
+
 
 export default function ProductPage() {
   const { id } = useLocalSearchParams();
@@ -12,15 +13,13 @@ export default function ProductPage() {
 
   const orderplaced = async () => {
     try {
-      // generate email content with AI
-      const prompt =  sendPrompt(
-        `Write a professional email to the seller saying a customer is interested in buying the product: ${product?.title}`
+      const subject = `${product?.title} bought by customer`
+      const body = await sendPrompt(
+        `Write an email to the seller saying a customer is interested in buying: ${product?.title} for price ${product?.price} and the quantity is one, and the location is ${product?.location}`
       );
+      // await sendEmail(subject, body);
+      sendEmail(subject, body);
 
-      // send the email
-      // await sendEmail();
-
-      // show confirmation to user
       Alert.alert("Order placed", "An email has been sent to the seller!");
     } catch (err) {
       console.error(err);
@@ -62,6 +61,7 @@ export default function ProductPage() {
     </ScrollView>
   );
 }
+
 
 
 const styles = StyleSheet.create({

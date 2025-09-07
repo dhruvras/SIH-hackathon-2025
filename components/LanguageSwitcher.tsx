@@ -14,7 +14,13 @@ export default function LanguageSwitcher() {
   return (
     <View style={styles.container}>
       <Text style={styles.text}>English</Text>
-      <Switch value={isHindi} onValueChange={toggleSwitch} />
+    <Switch
+        value={isHindi}
+        onValueChange={toggleSwitch}
+        trackColor={{ false: "#909b00ff", true: "#027222ff" }}  // track background
+        thumbColor={isHindi ? "#f5dd4b" : "#ffffffff"}       // circle/slider color
+        ios_backgroundColor="#3e3e3e"                      // iOS off background
+      />
       <Text style={styles.text}>हिन्दी</Text>
     </View>
   );
