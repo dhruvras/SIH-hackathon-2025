@@ -3,6 +3,7 @@ import NotificationModal from '@/components/NotificationsModal';
 import ProfileModal from '@/components/ProfilePopup';
 import '@/i18n'; // must come before any component
 import i18n from '@/i18n';
+import { Ionicons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
 import React, { useState } from 'react';
 import { I18nextProvider, useTranslation } from 'react-i18next';
@@ -63,12 +64,14 @@ export default function Index() {
           <View style={styles.navmenu}>
             <TouchableOpacity onPress={marketnav}>
               <View style={styles.marketbutton}>
+                <Ionicons name="storefront-outline" style={{paddingRight:6}} size={32} color="black" />
                 <Text style={styles.textframe}>{t('access_marketplace')}</Text>
               </View>
             </TouchableOpacity>
 
             <TouchableOpacity onPress={chatnav}>
               <View style={styles.chatbutton}>
+                <Ionicons name="chatbubble-ellipses-outline" style={{paddingRight:6}} size={32} color="black" />
                 <Text style={styles.textframe}>{t('access_chatbot')}</Text>
               </View>
             </TouchableOpacity>
@@ -149,14 +152,17 @@ const styles = StyleSheet.create({
   },
   marketbutton:{
     flexDirection:'row',
-    // backgroundColor:'yellow',
+    alignItems:'center',
     marginLeft:20,
+    justifyContent:'center',
 
   },
   chatbutton:{
     flexDirection:'row',
     // backgroundColor:'blue',
     marginRight:20,
+    justifyContent:'center',
+    alignItems:'center',
 
   },
   textframe:{
