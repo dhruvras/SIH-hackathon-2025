@@ -25,7 +25,7 @@ import logo from '../../assets/images/logo.png'; // Adjust the path accordingly
 
 import { useFocusEffect } from "@react-navigation/native";
 import { useCallback } from "react";
-import { fetchCsvData } from "../../utils/data_collect";
+// import { fetchCsvData } from "../../utils/data_collect";
 
 
 
@@ -38,14 +38,14 @@ export default function Index() {
   const [notificationModalVisible, setNotificationModalVisible] = useState(false);
   const [speaker, setSpeaker] = useState(true);
   const [loading, setLoading] = useState(false);
-  const [csvdata, setcsvData] = useState([]);   // to store CSV data
-  const [error, setError] = useState(null); // to store error
+  // const [csvdata, setcsvData] = useState([]);   // to store CSV data
+  // const [error, setError] = useState(null); // to store error
 
-  useEffect(() => {
-    fetchCsvData()
-      .then(setcsvData)     // if successful, put data in state
-      .catch(setError);  // if error, put error in state
-  }, []);
+  // useEffect(() => {
+  //   fetchCsvData()
+  //     .then(setcsvData)     // if successful, put data in state
+  //     .catch(setError);  // if error, put error in state
+  // }, []);
   const speak = (text: string) => {
     if(speaker){
     Speech.speak(text);
@@ -135,48 +135,72 @@ export default function Index() {
             </TouchableOpacity>
           </View>
         </View>
-        <Image source={logo} style={styles.image} />
       </View>
-      <FlatList
-        data={loading ? [...data, { type: 'bot-loading', text: '' }] : data} // add fake "loading" item
-        keyExtractor={(item, index) => index.toString()}
-        contentContainerStyle={styles.body}
-        renderItem={({ item }) => {
-          if (item.type === 'bot-loading') {
-            // 👇 Show loader as if bot is typing
-            return (
-              <View style={{ flexDirection: 'row', paddingVertical: 6 , paddingHorizontal:10,}}>
-                <Text style={{ fontWeight: 'bold', color: 'red' }}>Bot: </Text>
-                <ActivityIndicator size="small" color="#FFC107" />
-                <Text style={{ marginLeft: 8 }}>Typing...</Text>
-              </View>
-            );
-          }
-
-          return (
-            <View style={{ flexDirection: 'column', justifyContent: 'space-between' }}>
-              <View style={{ flexDirection: 'row', paddingVertical: 6, marginRight: 10 }}>
-                <Text style={{ fontWeight: 'bold', color: item.type === 'user' ? 'green' : 'red' }}>
-                  {item.type === 'user' ? 'You: ' : 'Bot: '}
-                </Text>
-                <Text style={styles.bot}>{item.text}</Text>
-              </View>
-              {item.type === 'bot' && (
-                <View>
-                  <TouchableOpacity onPress={() => speak(item.text)}>
-                    <Ionicons
-                      name="volume-high-outline"
-                      size={36}
-                      style={{ paddingHorizontal: 10 }}
-                      color="black"
-                    />
-                  </TouchableOpacity>
-                </View>
-              )}
-            </View>
-          );
+    <FlatList
+  data={[
+    { type: "header", text: "" }, // 👈 fake item for image
+    ...(loading ? [...data, { type: "bot-loading", text: "" }] : data),
+  ]}
+  keyExtractor={(item, index) => index.toString()}
+  contentContainerStyle={styles.body}
+  renderItem={({ item }) => {
+    if (item.type === "header") {
+  return (
+    <View style={{ alignItems: "center", marginBottom: 10 }}>
+      <Image
+        source={logo}
+        style={{
+          width: "100%",     // take full width
+          height: 100,       // adjust this to your needs
+          resizeMode: "contain", // keep full image without cropping
         }}
       />
+    </View>
+  );
+}
+
+    if (item.type === "bot-loading") {
+      return (
+        <View
+          style={{ flexDirection: "row", paddingVertical: 6, paddingHorizontal: 10 }}
+        >
+          <Text style={{ fontWeight: "bold", color: "red" }}>Bot: </Text>
+          <ActivityIndicator size="small" color="#FFC107" />
+          <Text style={{ marginLeft: 8 }}>Typing...</Text>
+        </View>
+      );
+    }
+
+    return (
+      <View style={{ flexDirection: "column", justifyContent: "space-between" }}>
+        <View style={{ flexDirection: "row", paddingVertical: 6 }}>
+          <Text
+            style={{
+              fontWeight: "bold",
+              color: item.type === "user" ? "green" : "red",
+            }}
+          >
+            {item.type === "user" ? "You: " : "Bot: "}
+          </Text>
+          <Text style={styles.bot}>{item.text}</Text>
+        </View>
+        {item.type === "bot" && (
+          <View>
+            <TouchableOpacity onPress={() => speak(item.text)}>
+              <Ionicons
+                name="volume-high-outline"
+                size={36}
+                style={{ paddingHorizontal: 0 }}
+                color="black"
+              />
+            </TouchableOpacity>
+          </View>
+        )}
+      </View>
+    );
+  }}
+/>
+
 
       <View style={{paddingBottom:25}}>
       <Animated.View style={[styles.inputContainer, { marginBottom: bottomOffset }]}>
