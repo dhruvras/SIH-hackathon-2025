@@ -1,10 +1,11 @@
-import { Stack } from 'expo-router'
-import React from 'react'
+// app/_layout.tsx
+import { Stack } from "expo-router";
+import { NotificationsProvider } from "../contex/NotificationsContext";
 
-export default function _layout() {
+export default function RootLayout() {
   return (
-    <Stack screenOptions={{headerShown:false}}>
-        <Stack.Screen name='login'/>
-    </Stack>
-  )
+    <NotificationsProvider>
+      <Stack screenOptions={{ headerShown: false }} />
+    </NotificationsProvider>
+  );
 }
