@@ -53,11 +53,8 @@ export default function Index() {
               <Icon name="bell" size={24} color="black" />
             </TouchableOpacity>
             <TouchableOpacity style={styles.iconButton} onPress={onPressProfile}>
-              <Icon name="user" size={24} color="black" />
+              <Icon name="user" size={24} color="blue" />
             </TouchableOpacity>
-            {/* <TouchableOpacity onPress={onPressProfile}>
-              <Icon name="database" size={24} color="#333" />
-            </TouchableOpacity> */}
           </View>
         </View>
 

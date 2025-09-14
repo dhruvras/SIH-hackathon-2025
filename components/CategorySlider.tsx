@@ -1,9 +1,14 @@
 import React from 'react';
 import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { useCategory } from "../contex/CategoryContext"; // adjust path
 
-const categories = ['Crops', 'Seeds', 'Tools', 'Machinery', 'Pesticides'];
 
-export default function CategorySlider({ onSelectCategory }: { onSelectCategory: (category: string) => void }) {
+
+const categories = ['All', 'Crops', 'Seeds', 'Tools', 'Machinery', 'Pesticides', 'Fertilizers', 'Essentials'];
+
+
+export default function CategorySlider() {
+  const { setSelectedCategory } = useCategory();
   return (
     <View style={styles.container}>
         <Text style={{
@@ -13,7 +18,7 @@ export default function CategorySlider({ onSelectCategory }: { onSelectCategory:
         }}>Categories: </Text>
       <ScrollView horizontal showsHorizontalScrollIndicator={false}>
         {categories.map((category, index) => (
-          <TouchableOpacity key={index} style={styles.categoryButton} onPress={() => onSelectCategory(category)}>
+          <TouchableOpacity key={index} style={styles.categoryButton} onPress={() => setSelectedCategory(category)}>
             <Text style={styles.categoryText}>{category}</Text>
           </TouchableOpacity>
         ))}

@@ -16,27 +16,27 @@ import {
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Feather';
 import AdSlider from '../../components/AdSlider';
-import ProductCard from '../../components/ProductCards'; // verify file name and path
+import ProductCard from '../../components/ProductCards'; // ✅ fixed
 import inventoryData from '../../constants/inventory';
+import { useCategory } from "../../contex/CategoryContext"; // ✅ fixed
 
 export default function DetailedPage() {
   const [modalVisible, setModalVisible] = useState(false);
   const [notificationModalVisible, setNotificationModalVisible] = useState(false);
   const [sideMenuVisible, setSideMenuVisible] = useState(false);
   const [searchText, setSearchText] = useState('');
+
+  const { selectedCategory, setSelectedCategory } = useCategory();
   const router = useRouter();
 
-  const onPressNotifications = () => {
-    setNotificationModalVisible(true);
-  };
+  const filteredData =
+    selectedCategory === "All"
+      ? inventoryData
+      : inventoryData.filter((item) => item.category === selectedCategory);
 
-  const onPressProfile = () => {
-    setModalVisible(true);
-  };
-
-  const onPressMenu = () => {
-    setSideMenuVisible(true);
-  };
+  const onPressNotifications = () => setNotificationModalVisible(true);
+  const onPressProfile = () => setModalVisible(true);
+  const onPressMenu = () => setSideMenuVisible(true);
 
   return (
     <ImageBackground
@@ -63,9 +63,9 @@ export default function DetailedPage() {
           </View>
         </View>
 
-        {/* Content with FlatList to avoid nested scroll issues */}
+        {/* Content */}
         <FlatList
-          data={inventoryData.filter(item =>
+          data={filteredData.filter(item =>
             item.title.toLowerCase().includes(searchText.toLowerCase())
           )}
           keyExtractor={(item) => String(item.id)}
@@ -88,13 +88,16 @@ export default function DetailedPage() {
               </View>
 
               <AdSlider />
-              <CategorySlider onSelectCategory={(category) => console.log('Selected:', category)} />
+              {/* ✅ Hooked to context */}
+              <CategorySlider onSelectCategory={setSelectedCategory} />
             </>
           }
           renderItem={({ item }) => (
             <ProductCard
               item={item}
-              action={() => router.push({ pathname: '/(market)/produtpage', params: { id: item.id } })}
+              action={() =>
+                router.push({ pathname: '/(market)/productpage', params: { id: item.id } }) // ✅ fixed typo
+              }
             />
           )}
         />

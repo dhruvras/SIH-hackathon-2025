@@ -3,7 +3,8 @@
 import { Ionicons } from '@expo/vector-icons';
 import { BlurView } from 'expo-blur';
 import React from 'react';
-import { Image, Modal, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { Image, Modal, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+// import { ScrollView } from 'react-native-reanimated/lib/typescript/Animated';
 
 type Props = {
   visible: boolean;
@@ -25,14 +26,14 @@ export default function ProfileModal({ visible, onClose }: Props) {
             <Ionicons name="arrow-back" size={24} color="#000" />
           </TouchableOpacity>
 
-          {/* Profile Content */}
-          <Text style={styles.title}>Profile</Text>
-          <Image source={require("@/assets/images/akashdhiyaani.png")} style={{borderRadius:200, width:100, height:100,marginVertical:10, marginLeft:95}}/>
-          <Text style={styles.label}>Name: Akash Dhyani</Text>
-          <Text style={styles.label}>Location: New Tehri</Text>
-          <Text style={styles.label}>Farm ID: 78957436</Text>
-          <Text style={styles.label}>Phone No.: 3342359299</Text>
-          
+          <ScrollView>
+            <Text style={styles.title}>Profile</Text>
+            <Image source={require("@/assets/images/akashdhiyaani.png")} style={{borderRadius:200, width:100, height:100,marginVertical:10, marginLeft:95}}/>
+            <Text style={styles.label}>Name: Akash Dhyani</Text>
+            <Text style={styles.label}>Location: New Tehri</Text>
+            <Text style={styles.label}>Farm ID: 78957436</Text>
+            <Text style={styles.label}>Phone No.: 3342359299</Text>
+          </ScrollView>
         </View>
       </BlurView>
     </Modal>
