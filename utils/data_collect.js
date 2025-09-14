@@ -1,5 +1,5 @@
-const SERVER_URL = "http://192.168.1.5:5050/data"; 
-// ⚠️ Replace with your laptop's local IP
+const SERVER_URL = "http://192.168.5.249:5050/data"; 
+
 
 export async function fetchCsvData() {
   try {
@@ -10,7 +10,7 @@ export async function fetchCsvData() {
       throw new Error(json.error);
     }
 
-    return json; // returns array of objects
+    return json;
   } catch (error) {
     console.error("Error fetching CSV data:", error);
     throw error;
