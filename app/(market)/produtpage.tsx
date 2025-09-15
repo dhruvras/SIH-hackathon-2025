@@ -1,4 +1,3 @@
-import { sendPrompt } from '@/utils/ai';
 import { useLocalSearchParams } from 'expo-router';
 import React from 'react';
 import {
@@ -35,13 +34,32 @@ export default function ProductPage() {
     if (!product) return;
 
     try {
-      addNotification(`Order placed for ${product.title} at ${product.price}`);
       const subject = `${product.title} bought by customer`;
-      const body = await sendPrompt(
-        `Write an email to the seller saying a customer is interested in buying: ${product.title} for price ${product.price} and the quantity is one, and the location is ${product.location}.`
-      );
+      const body = `Subject: Confirmation of Item Purchase - ${Math.floor(Math.random() * 1000000)}
+      
+      Dear Mohan Das,
+      
+This is to formally notify you that one of your items listed on our platform has been successfully purchased. The details of the transaction are as follows:
 
-      await sendEmail(subject, body);
+Item Name: ${product.title}
+
+Order ID: ${Math.floor(Math.random() * 1000000)}
+
+Buyer's Name: Akash Dhiyaani
+
+Quantity: 1
+
+Date of Purchase: ${new Date().toLocaleDateString()}
+
+You are kindly requested to initiate the dispatch process at the earliest convenience. Please ensure that the item is properly packed and shipped within the stipulated timeframe. Once dispatched, we request you to provide the shipping details and tracking number for our records.
+
+We appreciate your cooperation and look forward to your continued association with us.
+
+Sincerely,
+Annyknown`
+
+    await sendEmail(subject, body);
+    addNotification(`Order placed for ${product.title} at ${product.price}`);
 
       // ✅ Add notification to context
 

@@ -92,11 +92,12 @@ export default function DetailedPage() {
               <CategorySlider onSelectCategory={setSelectedCategory} />
             </>
           }
+          // ...existing code...
           renderItem={({ item }) => (
             <ProductCard
               item={item}
               action={() =>
-                router.push({ pathname: '/(market)/productpage', params: { id: item.id } }) // ✅ fixed typo
+                router.push({ pathname: '/(market)/produtpage', params: { id: item.id } }) // <-- fix route name
               }
             />
           )}
