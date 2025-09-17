@@ -56,7 +56,7 @@ You are kindly requested to initiate the dispatch process at the earliest conven
 We appreciate your cooperation and look forward to your continued association with us.
 
 Sincerely,
-Annyknown`
+Annknown`
 
     await sendEmail(subject, body);
     addNotification(`Order placed for ${product.title} at ${product.price}`);

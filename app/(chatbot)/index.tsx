@@ -5,11 +5,9 @@ import SubmitButton from '@/components/SubmitButton';
 import i18n from '@/i18n';
 import { sendPrompt } from '@/utils/ai';
 import { Ionicons } from '@expo/vector-icons';
+import { useFocusEffect } from "@react-navigation/native";
 import * as Speech from 'expo-speech';
 import React, { useCallback, useEffect, useState } from 'react';
-import { fetchCsvData } from "../../utils/data_collect";
-
-import { useFocusEffect } from "@react-navigation/native";
 import {
   ActivityIndicator,
   Animated,
@@ -25,6 +23,10 @@ import {
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Feather';
 import logo from '../../assets/images/logo.png';
+import cropData from '../../constants/idealData';
+import { convertAll } from '../../utils/convertSensors';
+import { fetchCsvData } from "../../utils/data_collect";
+
 
 export default function Index() {
   const [chatData, setChatData] = useState<any[]>([]);
@@ -36,6 +38,7 @@ export default function Index() {
   const [notificationModalVisible, setNotificationModalVisible] = useState(false);
   const [speaker, setSpeaker] = useState(true);
   const [loading, setLoading] = useState(false);
+
 
   // ✅ Fetch CSV data on mount
   useEffect(() => {
@@ -96,36 +99,60 @@ export default function Index() {
   }, []);
 
   // ✅ Action when sending a prompt
-  const action = async () => {
-    console.log("👉 Current CSV data:", csvData);
+  // ✅ Action when sending a prompt
+const action = async () => {
+  console.log("👉 Current CSV data:", csvData);
 
-    if (!input.trim()) return;
+  if (!input.trim()) return;
 
-    setChatData(prev => [...prev, { type: 'user', text: input }]);
+  setChatData(prev => [...prev, { type: 'user', text: input }]);
 
-    const csvString = csvData.length ? csvData.join(", ") : "no CSV data";
+  const roverData = csvData.length ? csvData : [55, 140, 67, 53, 66, 21]; 
+  // Ensure at least 6 values [n, p, k, moisture, humidity, temp]
 
-    const currentInput =
-      input +
-      ` (the data given is: ${csvString}) ` +
-      ` and please respond in ${
-        i18n.language === 'hi'
-          ? "Hindi (Devanagari script only, no translation/explanation)"
-          : "English"
-      }.`;
-
-    setInput('');
-    setLoading(true);
-
-    try {
-      const response = await sendPrompt(currentInput);
-      setChatData(prev => [...prev, { type: 'bot', text: response }]);
-    } catch (err: any) {
-      setChatData(prev => [...prev, { type: 'bot', text: 'Error: ' + err.message }]);
-    } finally {
-      setLoading(false);
-    }
+  const adcReadings = { 
+    n: roverData[0], 
+    p: roverData[1], 
+    k: roverData[2], 
+    moisture: roverData[3] 
   };
+
+  const result = convertAll(adcReadings, { moistureInverted: false });
+  const options = { month: 'long' };
+  const currentMonthName = new Date().toLocaleString('en-US', options);
+
+  const currentInput =
+    input +
+    ` (the current data of the soil are 
+    soil moisture: ${result.moisture.value}, 
+    nitrogen of the soil: ${result.N.value}, 
+    phosphorus of the soil: ${result.P.value}, 
+    potassium of the soil: ${result.K.value}, 
+    humidity of the soil: ${roverData[4]}, 
+    and the temperature of the environment: ${roverData[5]},
+    and the present month ${currentMonthName}) ` +
+    `(the ideal data for the soil is ${JSON.stringify(cropData, null, 2)}) ` +
+    `and please respond in ${
+      i18n.language === 'hi'
+        ? "Hindi, no translation/explanation"
+        : "English"
+    }.`;
+
+  console.log("📝 Full prompt sent to AI:", currentInput);
+
+  setInput('');
+  setLoading(true);
+
+  try {
+    const response = await sendPrompt(currentInput);
+    setChatData(prev => [...prev, { type: 'bot', text: response }]);
+  } catch (err: any) {
+    setChatData(prev => [...prev, { type: 'bot', text: 'Error: ' + err.message }]);
+  } finally {
+    setLoading(false);
+  }
+};
+
 
   const onPressNotifications = () => {
     console.log('Notifications button pressed');

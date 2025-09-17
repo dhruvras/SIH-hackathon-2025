@@ -11,7 +11,7 @@ export async function sendEmail(sub, body) {
 
   let mailOptions = {
     from: "dhruvrastogi2020@gmail.com",
-    to: "dhrurast@gmail.com",
+    to: "dmprrr3r@gmail.com",
     subject: sub,
     text: body,
   };
