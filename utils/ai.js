@@ -1,6 +1,6 @@
 export async function sendPrompt(prompt) {
   try {
-    const response = await fetch("http://192.168.180.132:8000/generate", {
+    const response = await fetch("http://192.168.5.72:8000/generate", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
